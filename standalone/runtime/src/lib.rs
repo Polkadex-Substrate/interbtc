@@ -189,9 +189,14 @@ impl frame_system::Config for Runtime {
     type OnSetCode = ();
 }
 
+parameter_types! {
+    pub const MaxAuthorities: u32 = 32;
+}
+
 impl pallet_aura::Config for Runtime {
     type AuthorityId = AuraId;
     type DisabledValidators = ();
+    type MaxAuthorities = MaxAuthorities;
 }
 
 impl pallet_grandpa::Config for Runtime {
@@ -203,6 +208,7 @@ impl pallet_grandpa::Config for Runtime {
         <Self::KeyOwnerProofSystem as KeyOwnerProofSystem<(KeyTypeId, GrandpaId)>>::IdentificationTuple;
     type HandleEquivocation = ();
     type WeightInfo = ();
+    type MaxAuthorities = MaxAuthorities;
 }
 
 parameter_types! {
@@ -219,6 +225,7 @@ impl pallet_timestamp::Config for Runtime {
 
 parameter_types! {
     pub const TransactionByteFee: Balance = 0;  // TODO: this is 0 so that we can do runtime upgrade without fees. Restore value afterwards!
+    pub OperationalFeeMultiplier: u8 = 5;
 }
 
 impl pallet_transaction_payment::Config for Runtime {
@@ -226,6 +233,7 @@ impl pallet_transaction_payment::Config for Runtime {
     type TransactionByteFee = TransactionByteFee;
     type WeightToFee = IdentityFee<Balance>;
     type FeeMultiplierUpdate = ();
+    type OperationalFeeMultiplier = OperationalFeeMultiplier;
 }
 
 impl pallet_sudo::Config for Runtime {
@@ -297,6 +305,7 @@ parameter_types! {
     pub const FastTrackVotingPeriod: BlockNumber = 3 * HOURS;
     pub MinimumDeposit: Balance = 100 * DOLLARS;
     pub const EnactmentPeriod: BlockNumber = DAYS;
+    pub const VoteLockingPeriod: BlockNumber = 2 * DAYS; // Note to Greg: may want to change this
     pub const CooloffPeriod: BlockNumber = 7 * DAYS;
     pub PreimageByteDeposit: Balance = 1 * CENTS;
     pub const InstantAllowed: bool = true;
@@ -309,6 +318,7 @@ impl pallet_democracy::Config for Runtime {
     type Event = Event;
     type Currency = orml_tokens::CurrencyAdapter<Runtime, GetNativeCurrencyId>;
     type EnactmentPeriod = EnactmentPeriod;
+    type VoteLockingPeriod = VoteLockingPeriod;
     type LaunchPeriod = LaunchPeriod;
     type VotingPeriod = VotingPeriod;
     type MinimumDeposit = MinimumDeposit;
@@ -730,7 +740,7 @@ impl_runtime_apis! {
 
     impl sp_api::Metadata<Block> for Runtime {
         fn metadata() -> OpaqueMetadata {
-            Runtime::metadata().into()
+            OpaqueMetadata::new(Runtime::metadata().into())
         }
     }
 
@@ -819,7 +829,7 @@ impl_runtime_apis! {
         }
 
         fn authorities() -> Vec<AuraId> {
-            Aura::authorities()
+            Aura::authorities().into_inner()
         }
     }
 
