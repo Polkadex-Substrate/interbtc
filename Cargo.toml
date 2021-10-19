@@ -2,14 +2,21 @@
 members = [
   "crates/*",
   "primitives",
-  "parachain",
-  "parachain/runtime",
-  "standalone",
-  "standalone/runtime",
+#  "parachain",
+#  "parachain/runtime",
+#  "standalone",
+#  "standalone/runtime",
   "rpc",
 ]
 
-resolver = "2"
+[patch."https://github.com/open-web3-stack/open-runtime-module-library.git"]
+orml-vesting = { git = "https://github.com/Gauthamastro/open-runtime-module-library.git", branch = "gj-substrate-master" }
+orml-currencies = { git = "https://github.com/Gauthamastro/open-runtime-module-library.git", branch = "gj-substrate-master" }
+orml-tokens = { git = "https://github.com/Gauthamastro/open-runtime-module-library.git", branch = "gj-substrate-master" }
+orml-traits = { git = "https://github.com/Gauthamastro/open-runtime-module-library.git", branch = "gj-substrate-master" }
+
+
+#resolver = "2"
 
 # disable incremental compilation to work around a compiler bug.
 # See https://blog.rust-lang.org/2021/05/10/Rust-1.52.1.html

@@ -1,11 +1,11 @@
 use crate as relay;
-use crate::{Config, Error};
+use crate::{Config};
 use currency::Amount;
 use frame_support::{parameter_types, traits::GenesisBuild, PalletId};
-use mocktopus::{macros::mockable, mocking::clear_mocks};
+use mocktopus::{macros::mockable};
 use orml_traits::parameter_type_with_key;
 pub use primitives::CurrencyId;
-use primitives::{VaultCurrencyPair, VaultId};
+use primitives::{VaultCurrencyPair};
 use sp_arithmetic::{FixedI128, FixedPointNumber, FixedU128};
 use sp_core::H256;
 use sp_runtime::{
@@ -65,7 +65,7 @@ parameter_types! {
 }
 
 impl frame_system::Config for Test {
-    type BaseCallFilter = ();
+    type BaseCallFilter = frame_support::traits::Everything;
     type BlockWeights = ();
     type BlockLength = ();
     type DbWeight = ();
@@ -123,7 +123,7 @@ impl orml_tokens::Config for Test {
     type ExistentialDeposits = ExistentialDeposits;
     type OnDust = ();
     type MaxLocks = MaxLocks;
-    type DustRemovalWhitelist = ();
+    type DustRemovalWhitelist = frame_support::traits::Everything;
 }
 
 impl reward::Config for Test {
@@ -260,33 +260,6 @@ impl Config for Test {
 }
 
 pub type TestEvent = Event;
-pub type TestError = Error<Test>;
-pub type RedeemError = redeem::Error<Test>;
-
-pub const ALICE: AccountId = 1;
-pub const BOB: VaultId<AccountId, CurrencyId> = VaultId {
-    account_id: 2,
-    currencies: VaultCurrencyPair {
-        collateral: DEFAULT_TESTING_CURRENCY,
-        wrapped: DEFAULT_WRAPPED_CURRENCY,
-    },
-};
-
-pub const CAROL: VaultId<AccountId, CurrencyId> = VaultId {
-    account_id: 3,
-    currencies: VaultCurrencyPair {
-        collateral: DEFAULT_TESTING_CURRENCY,
-        wrapped: DEFAULT_WRAPPED_CURRENCY,
-    },
-};
-pub const DAVE: AccountId = 4;
-pub const EVE: AccountId = 5;
-
-pub const ALICE_BALANCE: u128 = 1_000_000;
-pub const BOB_BALANCE: u128 = 1_000_000;
-pub const CAROL_BALANCE: u128 = 1_000_000;
-pub const DAVE_BALANCE: u128 = 1_000_000;
-pub const EVE_BALANCE: u128 = 1_000_000;
 
 pub struct ExtBuilder;
 
@@ -336,31 +309,4 @@ impl ExtBuilder {
         storage.into()
     }
 
-    pub fn build() -> sp_io::TestExternalities {
-        ExtBuilder::build_with(|storage| {
-            orml_tokens::GenesisConfig::<Test> {
-                balances: vec![
-                    (ALICE, DOT, ALICE_BALANCE),
-                    (BOB.account_id, DOT, BOB_BALANCE),
-                    (CAROL.account_id, DOT, CAROL_BALANCE),
-                    (DAVE, DOT, DAVE_BALANCE),
-                    (EVE, DOT, EVE_BALANCE),
-                ],
-            }
-            .assimilate_storage(storage)
-            .unwrap();
-        })
-    }
-}
-
-pub fn run_test<T>(test: T)
-where
-    T: FnOnce(),
-{
-    clear_mocks();
-    ExtBuilder::build().execute_with(|| {
-        System::set_block_number(1);
-        Security::set_active_block_number(1);
-        test();
-    });
 }
