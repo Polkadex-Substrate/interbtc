@@ -5176,7 +5176,7 @@ dependencies = [
 [[package]]
 name = "secp256k1"
 version = "0.20.3"
-source = "git+https://github.com/rust-bitcoin/rust-secp256k1?branch=master#24a9c9c765ac3cc1b1b5219e3944efb206e4317c"
+source = "git+https://github.com/rust-bitcoin/rust-secp256k1#24a9c9c765ac3cc1b1b5219e3944efb206e4317c"
 dependencies = [
  "rand 0.6.5",
  "secp256k1-sys",
@@ -5185,7 +5185,7 @@ dependencies = [
 [[package]]
 name = "secp256k1-sys"
 version = "0.4.1"
-source = "git+https://github.com/rust-bitcoin/rust-secp256k1?branch=master#24a9c9c765ac3cc1b1b5219e3944efb206e4317c"
+source = "git+https://github.com/rust-bitcoin/rust-secp256k1#24a9c9c765ac3cc1b1b5219e3944efb206e4317c"
 dependencies = [
  "cc",
 ]
