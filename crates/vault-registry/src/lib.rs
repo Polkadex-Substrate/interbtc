@@ -51,7 +51,7 @@ use frame_system::{
     ensure_signed,
     offchain::{SendTransactionTypes, SubmitTransaction},
 };
-use sp_core::{H256, U256};
+use sp_core::{ U256};
 #[cfg(feature = "std")]
 use sp_runtime::traits::AtLeast32BitUnsigned;
 use sp_runtime::{
@@ -916,16 +916,16 @@ impl<T: Config> Pallet<T> {
         Ok(())
     }
 
-    /// Registers a btc address
-    ///
-    /// # Arguments
-    /// * `issue_id` - secure id for generating deposit address
-    pub fn register_deposit_address(vault_id: &DefaultVaultId<T>, issue_id: H256) -> Result<BtcAddress, DispatchError> {
-        let mut vault = Self::get_active_rich_vault_from_id(&vault_id)?;
-        let btc_address = vault.new_deposit_address(issue_id)?;
-        Self::deposit_event(Event::<T>::RegisterAddress(vault.id(), btc_address));
-        Ok(btc_address)
-    }
+    // /// Registers a btc address
+    // ///
+    // /// # Arguments
+    // /// * `issue_id` - secure id for generating deposit address
+    // pub fn register_deposit_address(vault_id: &DefaultVaultId<T>, issue_id: H256) -> Result<BtcAddress, DispatchError> {
+    //     let mut vault = Self::get_active_rich_vault_from_id(&vault_id)?;
+    //     let btc_address = vault.new_deposit_address(issue_id)?;
+    //     Self::deposit_event(Event::<T>::RegisterAddress(vault.id(), btc_address));
+    //     Ok(btc_address)
+    // }
 
     /// returns the amount of tokens that a vault can request to be replaced on top of the
     /// current to-be-replaced tokens
@@ -1789,14 +1789,14 @@ impl<T: Config> Pallet<T> {
         Ok(())
     }
 
-    pub fn new_vault_deposit_address(
-        vault_id: &DefaultVaultId<T>,
-        secure_id: H256,
-    ) -> Result<BtcAddress, DispatchError> {
-        let mut vault = Self::get_active_rich_vault_from_id(vault_id)?;
-        let btc_address = vault.new_deposit_address(secure_id)?;
-        Ok(btc_address)
-    }
+    // pub fn new_vault_deposit_address(
+    //     vault_id: &DefaultVaultId<T>,
+    //     secure_id: H256,
+    // ) -> Result<BtcAddress, DispatchError> {
+    //     let mut vault = Self::get_active_rich_vault_from_id(vault_id)?;
+    //     let btc_address = vault.new_deposit_address(secure_id)?;
+    //     Ok(btc_address)
+    // }
 
     #[cfg(feature = "integration-tests")]
     pub fn collateral_integrity_check() {

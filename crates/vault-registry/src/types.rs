@@ -8,7 +8,6 @@ use frame_support::{
 };
 
 pub use primitives::{VaultCurrencyPair, VaultId};
-use sp_core::H256;
 use sp_runtime::traits::{CheckedAdd, CheckedSub, Zero};
 use sp_std::collections::btree_set::BTreeSet;
 
@@ -643,14 +642,14 @@ impl<T: Config> RichVault<T> {
         });
     }
 
-    fn new_deposit_public_key(&self, secure_id: H256) -> Result<BtcPublicKey, DispatchError> {
-        let vault_public_key = self.data.wallet.public_key.clone();
-        let vault_public_key = vault_public_key
-            .new_deposit_public_key(secure_id)
-            .map_err(|_| Error::<T>::InvalidPublicKey)?;
-
-        Ok(vault_public_key)
-    }
+    // fn new_deposit_public_key(&self, secure_id: H256) -> Result<BtcPublicKey, DispatchError> {
+    //     let vault_public_key = self.data.wallet.public_key.clone();
+    //     let vault_public_key = vault_public_key
+    //         .new_deposit_public_key(secure_id)
+    //         .map_err(|_| Error::<T>::InvalidPublicKey)?;
+    //
+    //     Ok(vault_public_key)
+    // }
 
     pub(crate) fn insert_deposit_address(&mut self, btc_address: BtcAddress) {
         let _ = self.update(|v| {
@@ -659,12 +658,12 @@ impl<T: Config> RichVault<T> {
         });
     }
 
-    pub(crate) fn new_deposit_address(&mut self, secure_id: H256) -> Result<BtcAddress, DispatchError> {
-        let public_key = self.new_deposit_public_key(secure_id)?;
-        let btc_address = BtcAddress::P2WPKHv0(public_key.to_hash());
-        self.insert_deposit_address(btc_address);
-        Ok(btc_address)
-    }
+    // pub(crate) fn new_deposit_address(&mut self, secure_id: H256) -> Result<BtcAddress, DispatchError> {
+    //     let public_key = self.new_deposit_public_key(secure_id)?;
+    //     let btc_address = BtcAddress::P2WPKHv0(public_key.to_hash());
+    //     self.insert_deposit_address(btc_address);
+    //     Ok(btc_address)
+    // }
 
     pub(crate) fn update_public_key(&mut self, public_key: BtcPublicKey) {
         let _ = self.update(|v| {
