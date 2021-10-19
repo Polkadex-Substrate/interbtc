@@ -404,9 +404,9 @@ dependencies = [
  "frame-support 4.0.0-dev (git+https://github.com/paritytech/substrate?branch=master)",
  "hex",
  "impl-serde",
+ "libsecp256k1 0.7.0",
  "mocktopus",
  "parity-scale-codec",
- "secp256k1",
  "serde",
  "sha2 0.8.2",
  "sp-core 4.0.0-dev (git+https://github.com/paritytech/substrate?branch=master)",
@@ -2807,9 +2807,9 @@ dependencies = [
  "base64 0.12.3",
  "digest 0.9.0",
  "hmac-drbg",
- "libsecp256k1-core",
- "libsecp256k1-gen-ecmult",
- "libsecp256k1-gen-genmult",
+ "libsecp256k1-core 0.2.2",
+ "libsecp256k1-gen-ecmult 0.2.1",
+ "libsecp256k1-gen-genmult 0.2.1",
  "rand 0.7.3",
  "serde",
  "sha2 0.9.8",
@@ -2826,10 +2826,28 @@ dependencies = [
  "base64 0.12.3",
  "digest 0.9.0",
  "hmac-drbg",
- "libsecp256k1-core",
- "libsecp256k1-gen-ecmult",
- "libsecp256k1-gen-genmult",
+ "libsecp256k1-core 0.2.2",
+ "libsecp256k1-gen-ecmult 0.2.1",
+ "libsecp256k1-gen-genmult 0.2.1",
  "rand 0.7.3",
+ "serde",
+ "sha2 0.9.8",
+ "typenum",
+]
+
+[[package]]
+name = "libsecp256k1"
+version = "0.7.0"
+source = "git+https://github.com/paritytech/libsecp256k1.git?branch=master#91aaa919a5d94711b77d6676bee262755929a2a8"
+dependencies = [
+ "arrayref",
+ "base64 0.13.0",
+ "digest 0.9.0",
+ "hmac-drbg",
+ "libsecp256k1-core 0.3.0",
+ "libsecp256k1-gen-ecmult 0.3.0",
+ "libsecp256k1-gen-genmult 0.3.0",
+ "rand 0.8.4",
  "serde",
  "sha2 0.9.8",
  "typenum",
@@ -2847,12 +2865,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "libsecp256k1-core"
+version = "0.3.0"
+source = "git+https://github.com/paritytech/libsecp256k1.git?branch=master#91aaa919a5d94711b77d6676bee262755929a2a8"
+dependencies = [
+ "crunchy",
+ "digest 0.9.0",
+ "subtle",
+]
+
+[[package]]
 name = "libsecp256k1-gen-ecmult"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ccab96b584d38fac86a83f07e659f0deafd0253dc096dab5a36d53efe653c5c3"
 dependencies = [
- "libsecp256k1-core",
+ "libsecp256k1-core 0.2.2",
+]
+
+[[package]]
+name = "libsecp256k1-gen-ecmult"
+version = "0.3.0"
+source = "git+https://github.com/paritytech/libsecp256k1.git?branch=master#91aaa919a5d94711b77d6676bee262755929a2a8"
+dependencies = [
+ "libsecp256k1-core 0.3.0",
 ]
 
 [[package]]
@@ -2861,7 +2897,15 @@ version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "67abfe149395e3aa1c48a2beb32b068e2334402df8181f818d3aee2b304c4f5d"
 dependencies = [
- "libsecp256k1-core",
+ "libsecp256k1-core 0.2.2",
+]
+
+[[package]]
+name = "libsecp256k1-gen-genmult"
+version = "0.3.0"
+source = "git+https://github.com/paritytech/libsecp256k1.git?branch=master#91aaa919a5d94711b77d6676bee262755929a2a8"
+dependencies = [
+ "libsecp256k1-core 0.3.0",
 ]
 
 [[package]]
@@ -5171,23 +5215,6 @@ checksum = "b362b83898e0e69f38515b82ee15aa80636befe47c3b6d3d89a911e78fc228ce"
 dependencies = [
  "ring",
  "untrusted",
-]
-
-[[package]]
-name = "secp256k1"
-version = "0.20.1"
-source = "git+https://github.com/rust-bitcoin/rust-secp256k1?rev=8e61874#8e61874d7706143f90a303e8077f69cb8873edff"
-dependencies = [
- "rand 0.6.5",
- "secp256k1-sys",
-]
-
-[[package]]
-name = "secp256k1-sys"
-version = "0.4.0"
-source = "git+https://github.com/rust-bitcoin/rust-secp256k1?rev=8e61874#8e61874d7706143f90a303e8077f69cb8873edff"
-dependencies = [
- "cc",
 ]
 
 [[package]]

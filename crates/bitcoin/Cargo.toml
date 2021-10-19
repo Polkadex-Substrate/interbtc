@@ -11,7 +11,8 @@ impl-serde = { version = "0.3.1", default-features = false, optional = true }
 sha2 = { version = "0.8.2", default-features = false }
 hex = { version = "0.4.2", default-features = false }
 bitcoin_hashes = { version = "0.7.3", default-features = false }
-secp256k1 = { package = "secp256k1", git = "https://github.com/rust-bitcoin/rust-secp256k1", rev = "8e61874", default-features = false }
+#secp256k1 = { package = "secp256k1", git = "https://github.com/rust-bitcoin/rust-secp256k1", rev = "8e61874", default-features = false }
+secp256k1 = { package = "libsecp256k1", git = "https://github.com/paritytech/libsecp256k1.git", branch="master", default-features = false }
 spin = { version = "0.7.1", default-features = false }
 
 # Substrate dependencies
@@ -21,8 +22,8 @@ frame-support = { git = "https://github.com/paritytech/substrate", branch = "mas
 
 [dev-dependencies]
 mocktopus = "0.7.0"
-secp256k1 = { package = "secp256k1", git = "https://github.com/rust-bitcoin/rust-secp256k1", rev = "8e61874", default-features = false, features = ["rand-std"] }
-
+#secp256k1 = { package = "secp256k1", git = "https://github.com/rust-bitcoin/rust-secp256k1", rev = "8e61874", default-features = false, features = ["rand-std"] }
+secp256k1 = { package = "libsecp256k1", git = "https://github.com/paritytech/libsecp256k1.git", branch="master"}
 [features]
 default = ["std"]
 std = [
